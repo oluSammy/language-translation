@@ -7,7 +7,7 @@ export class Translation {
 
     private async googleTranslate(text: string, to?: string, from?: string): Promise<string> {
         const browser = await require("puppeteer").launch({
-            headless: false,
+            headless: true,
         });
 
         const page = await browser.newPage();

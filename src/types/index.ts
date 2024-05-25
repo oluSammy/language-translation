@@ -1,0 +1,1 @@
+type Languages = "en" | "es" | "fr" | "de" | "it" | "ja" | "ko" | "pt" | "ru" | "zh" | "zh-Hant" | "ar" | "bn" | "bg" | "da" | "nl" | "et" | "fi" | "ha" | "he" | "ja" | "ko" | ""

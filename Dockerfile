@@ -1,13 +1,23 @@
-FROM node:18-alpine 
+FROM node:18-alpine
 
-# Install dependency
+# update packages
+RUN apk update
+
+# create root application folder
+WORKDIR /app
+
+# copy configs to /app folder
 COPY package*.json .
+
 RUN npm install
+COPY tsconfig.json ./
+# copy source code to /app/src folder
+COPY src /app/src
 
-COPY . .
-
+# check files list
 RUN ls -a
 
+RUN npm install
 RUN npm run build
 
-CMD ["node", "dist/index.js"]
+CMD [ "node", "./dist/index.js" ]

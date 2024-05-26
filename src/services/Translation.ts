@@ -8,6 +8,13 @@ export class Translation {
     private async googleTranslate(text: string, to?: string, from?: string): Promise<string> {
         const browser = await require("puppeteer").launch({
             headless: true,
+            args: [
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--single-process",
+                "--no-zygote"
+            ],
+            executablePath: "/usr/bin/google-chrome-stable"
         });
 
         const page = await browser.newPage();

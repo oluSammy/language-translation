@@ -1,15 +1,25 @@
-FROM ghcr.io/puppeteer/puppeteer:16.1.0
+#Build stage
+FROM node:18-alpine AS build
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-    PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+WORKDIR /app
 
+COPY package*.json .
 
-WORKDIR /usr/src/app
-
-COPY package.json ./
 RUN npm install
-RUN npm run tsc
 
 COPY . .
-CMD ["node", "dist/index.js"]
 
+RUN npm run build
+
+#Production stage
+FROM node:18-alpine AS production
+
+WORKDIR /app
+
+COPY package*.json .
+
+RUN npm ci --only=production
+
+COPY --from=build /app/dist ./dist
+
+CMD ["node", "dist/index.js"]

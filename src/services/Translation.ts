@@ -1,3 +1,6 @@
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium-min";
+
 export class Translation {
 
     public async translate(text: string, to?: string, from?: string): Promise<string> {
@@ -6,16 +9,16 @@ export class Translation {
     }
 
     private async googleTranslate(text: string, to?: string, from?: string): Promise<string> {
-        const browser = await require("puppeteer").launch({
-            headless: true,
-            args: [
-                "--no-sandbox",
-                "--disable-setuid-sandbox",
-                "--single-process",
-                "--no-zygote"
-            ],
-            executablePath: "/usr/bin/google-chrome-stable"
+
+        const browser = await puppeteer.launch({
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath(
+                "https://github.com/oluSammy/puppeteer-chromium/raw/main/chromium.tar"
+            ),
+            headless: chromium.headless,
         });
+
 
         const page = await browser.newPage();
 

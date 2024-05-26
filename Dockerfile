@@ -1,23 +1,30 @@
-FROM node:18-alpine
+FROM node:20 as builder
 
-# update packages
-RUN apk update
+# Create app directory
+WORKDIR /usr/src/app
 
-# create root application folder
-WORKDIR /app
+# Install app dependencies
+COPY package*.json ./
 
-# copy configs to /app folder
-COPY package*.json .
+RUN npm ci
 
-RUN npm install
-COPY tsconfig.json ./
-# copy source code to /app/src folder
-COPY src /app/src
+COPY . .
 
-# check files list
-RUN ls -a
-
-RUN npm install
 RUN npm run build
 
-CMD [ "node", "./dist/index.js" ]
+FROM node:lts-slim
+
+ENV NODE_ENV production
+USER node
+
+# Create app directory
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package*.json ./
+
+RUN npm ci --production
+
+COPY --from=builder /usr/src/app/dist ./dist
+
+CMD [ "node", "dist/index.js" ]

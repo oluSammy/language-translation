@@ -6,6 +6,11 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+
+RUN chown -R pptruser:pptruser /usr/src/app && npm install
+
+RUN chown -R pptruser:pptruser /usr/src/app
+
 RUN npm i
 COPY . .
 RUN npm run build 

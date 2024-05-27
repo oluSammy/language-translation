@@ -1,8 +1,7 @@
 FROM node:20
-WORKDIR /
-
-COPY package.json /
-RUN npm install
-COPY . /
-RUN npm run build
-CMD ["cd", "dist", "&&", "ls", "-a"]
+WORKDIR /app
+COPY package*.json ./
+RUN npm i
+COPY . .
+RUN npm run build 
+CMD ["node", "dist/index.js"]

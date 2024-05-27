@@ -7,11 +7,18 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN chown -R pptruser:pptruser /usr/src/app && npm install
+RUN chown -R pptruser:pptruser /usr/src/app
+USER pptruser
+RUN npm install
 
 RUN chown -R pptruser:pptruser /usr/src/app
 
 RUN npm i
+
+USER root
 COPY . .
+
+RUN chown -R pptruser:pptruser /usr/src/app
+USER pptruser
 RUN npm run build 
 CMD ["node", "src/index.js"]

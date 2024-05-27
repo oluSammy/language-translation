@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm i
 COPY . .
 RUN npm run build 
-CMD ["ls", "-a"]
+CMD ["node", "src/index.js"]

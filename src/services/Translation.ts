@@ -1,5 +1,4 @@
-import puppeteer from "puppeteer-core";
-import chromium from "@sparticuz/chromium-min";
+import puppeteer from "puppeteer";
 
 export class Translation {
 
@@ -11,12 +10,13 @@ export class Translation {
     private async googleTranslate(text: string, to?: string, from?: string): Promise<string> {
 
         const browser = await puppeteer.launch({
-            args: chromium.args,
-            defaultViewport: chromium.defaultViewport,
-            executablePath: await chromium.executablePath(
-                "https://github.com/oluSammy/puppeteer-chromium/raw/main/chromium.tar"
-            ),
-            headless: chromium.headless,
+            args: [
+                "--disable-setuid-sandbox",
+                "--no-sandbox",
+                "--single-process",
+                "--no-zygote",
+            ],
+            executablePath: "/usr/bin/google-chrome-stable",
         });
 
 

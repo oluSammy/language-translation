@@ -4,7 +4,7 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 
 WORKDIR /usr/src/app
-
+USER root
 COPY package*.json ./
 
 RUN chown -R pptruser:pptruser /usr/src/app

@@ -11,8 +11,6 @@ app.post('/', async (req, res) => {
     const { to, from } = req.query as { to: string; from: string }
     const { message } = req.body
 
-    console.log({ to, from }, "{ to, from }")
-
     const translatedText = await translationService.translate(message, to, from);
 
     res.status(200).json({
@@ -24,9 +22,10 @@ app.post('/', async (req, res) => {
 });
 
 app.get("/", (_, res) => {
-    res.status(200).json({
-        message: "/post"
-    })
+    res.redirect("https://documenter.getpostman.com/view/13917788/2sA3Qv8Avb")
+    // res.status(200).json({
+    //     message: "/post"
+    // })
 })
 
 app.listen(port, () => {

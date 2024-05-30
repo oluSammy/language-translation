@@ -8,7 +8,6 @@ export class Translation {
     }
 
     private async googleTranslate(text: string, to?: string, from?: string): Promise<string> {
-
         const browser = await puppeteer.launch({
             args: [
                 "--disable-setuid-sandbox",
@@ -18,6 +17,10 @@ export class Translation {
             ],
             executablePath: "/usr/bin/google-chrome-stable",
         });
+
+        // const browser = await puppeteer.launch({
+        //     headless: false
+        // })
 
 
         const page = await browser.newPage();

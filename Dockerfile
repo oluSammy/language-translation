@@ -20,5 +20,5 @@ COPY . .
 
 RUN chown -R pptruser:pptruser /usr/src/app
 USER pptruser
-RUN npm run build 
+RUN npm run build
 CMD ["node", "src/index.js"]
